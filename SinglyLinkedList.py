@@ -9,6 +9,7 @@ class SinglyLinkedList:
         new_node = Node(data)
         if self.head:
             current = self.head
+            self.COUNT_APPEND += 1
             while current.next:
                 current = current.next
                 self.COUNT_APPEND += 1

@@ -1,4 +1,4 @@
-from Queue import Queue  # Assuming you have the Queue class from your previous code
+from Queue import Queue
 class Dictionary:
     # A dictionary to map version names to their respective queue implementations
     SUPPORTED_VERSIONS = {
@@ -35,6 +35,7 @@ class Dictionary:
             self._keys.push(current_key)
             self._values.push(current_value)
 
+
             if current_key == key:
                 return current_value
 
@@ -45,11 +46,11 @@ class Dictionary:
             self.pop()
     
     def get_basic_operation(self):
-        return self._keys.queue.COUNT_APPEND + self._values.queue.COUNT_REMOVE
+        return self._keys.queue.COUNT_APPEND + self._keys.queue.COUNT_REMOVE
 
     def reset_counters(self):
         self._keys.queue.COUNT_APPEND = 0
-        self._values.queue.COUNT_REMOVE = 0
+        self._keys.queue.COUNT_REMOVE = 0
 
 if __name__ == '__main__':
     a = Dictionary(0)

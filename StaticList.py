@@ -30,7 +30,7 @@ class StaticList:
 
     def remove(self, index):
         if not self.is_empty() and 0 <= index < self.size:
-            for i in range(index, self.size):
+            for i in range(index, self.size - 1):
                 self.values[i] = self.values[i + 1]
                 self.COUNT_REMOVE += 1
             self.size -= 1
