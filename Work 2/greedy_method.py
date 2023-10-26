@@ -1,7 +1,5 @@
 import numpy as np
 
-
-
 def create_grid_world(size):
   w, h = size
   grid_world = np.zeros((w, h))
@@ -26,19 +24,18 @@ class path_planning(object):
   def solve_dynamic_programming(self):
     w, h = self.__xg, self.__yg
     table = np.zeros((w,h))
-    path = []
-    
-    for line in range(w):
-      for column in range(h):
-        if line < w - 1 and column < h - 1:
-          table[line, column] = max(self.__grid_world[line + 1, column],\
-                                    self.__grid_world[line, column + 1])
-        elif line < w - 1:
-          table[line, column] = self.__grid_world[line + 1, column]
-        elif column < h - 1:
-          table[line, column] = self.__grid_world[line, column + 1]
-    
-    return table
+    table[0, 0] = self.__grid_world[0, 0]
+
+
+    for column in range(1, h):
+       table[0, column] = table[0, column - 1] + self.__grid_world[0, column]
+    for line in range(1, w):
+      table[line, 0] = table[line-1, 0] + self.__grid_world[line, 0]
+      for column in range(1, h):
+         table[line, column] = np.max([table[line - 1, column],\
+                                    table[line, column - 1]]) + self.__grid_world[line, column]
+
+    return self.__helper_dynamic_programming(table)
 
   def solve_greedy(self):
       path = []
@@ -69,7 +66,6 @@ class path_planning(object):
     distance = -np.inf
     path = [-1 for i in range(self.__xg + self.__yg - 2)]
     self.__helper_backtracking(path)
-    print(count)
     return path
 
   def __helper_backtracking(self, path, S = 0, index_down = 0, index_right = 0, i = 0):
@@ -88,15 +84,36 @@ class path_planning(object):
             path[i] = 1
             self.__helper_backtracking(path, S + self.__grid_world[index_down, index_right], index_down, index_right + 1, i + 1)
 
-       
+  def __helper_dynamic_programming(self, table, index_down = 0, index_right = 0, path = []):
+      wg, hg = self.__xg, self.__yg
+      if (wg - 1, hg - 1) == (index_down, index_right):
+         return path
+      else:
+        if wg - 1 > index_down and hg - 1 > index_right:
+          action = np.argmax([table[index_down + 1, index_right],
+                              table[index_down, index_right + 1]])
+        elif wg - 1 > index_down:
+          action = 0
+        elif hg - 1 > index_right:
+          action = 1
+            
+        if action == 0:
+          path_ok = self.__helper_dynamic_programming(table,index_down = index_down + 1,
+                                                          index_right = index_right,
+                                                          path = path + [0])
+        else:
+          path_ok = self.__helper_dynamic_programming(table,index_down = index_down,
+                                                          index_right = index_right + 1,
+                                                          path = path + [1])
+      return path_ok
                 
 if __name__ == "__main__":
     grid_world = create_grid_world((5, 5)) # Create Grid World
     insert_obstacle(grid_world, (2, 1))    # Insert Obstacle
-    insert_obstacle(grid_world, (4, 1))    # Insert obstacle
+    insert_obstacle(grid_world, (4, 1))    # Insert Obstacle
 
     planner = path_planning(grid_world=grid_world)
-    print(planner.solve_greedy())
-    print(planner.solve_backtracking())
-    print(planner.solve_dynamic_programming())
+    print('Greedy -- >', planner.solve_greedy())
+    print('BackTracking -- >', planner.solve_backtracking())
+    print('DynamicPrograming -- >', planner.solve_dynamic_programming())
 
