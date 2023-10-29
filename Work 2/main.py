@@ -1,34 +1,38 @@
-from path_planning import path_planning,\
+from path_planning import PathPlanning,\
                           create_grid_world, insert_obstacle
 
 from multiprocessing import Process
+from view import view
+import numpy as np
 
 def main(grid_size):
     w, h = grid_size
     grid_world = create_grid_world(grid_size)
-    insert_obstacle(grid_world, (w//2, h-1))
-    insert_obstacle(grid_world, (w - 1, h // 2))
-    #insert_obstacle(grid_world, (w//2, 0))
+    insert_obstacle(grid_world, (w//2, h // 2))
     
     print(grid_world)
 
-    planner = path_planning(grid_world)
+    planner = PathPlanning(grid_world)
 
-    t1 = Process(target=planner.solve_greedy)
-    t2 = Process(target=planner.solve_backtracking)
-    t3 = Process(target=planner.solve_dynamic_programming)
-    t1.start()
-    t2.start()
-    t3.start()
+    planner.solve_greedy()
+    planner.solve_backtracking()
+    planner.solve_dynamic_programming()
+    print(planner.PATHS['greedy'])
+    print(planner.PATHS['backtracking'])
+    print(planner.PATHS['dynamic_programming'])
 
-    print(grid_world)
-    #print('Greedy -- >', planner.solve_greedy(), '\n')
-    #print('BackTracking -- >', planner.solve_backtracking(), '\n')
-    #print('DynamicPrograming -- >', planner.solve_dynamic_programming())
+    viewer = view(grid_size, 255 * np.ones((512,512,3), np.uint8))
+    viewer.draw_robot()
+    viewer.draw_goal()
+    viewer.draw_grid_world()
+    viewer.draw_obstacle([(w //2, h // 2)])
+    viewer.draw_path(planner.PATHS['backtracking']['path'], color = [250, 150, 0])
+    viewer.draw_path(planner.PATHS['greedy']['path'], color = [0, 150, 250])
+    viewer.draw_path(planner.PATHS['dynamic_programming']['path'], color=[150, 0, 250])
+    viewer.imshow()
 
 
-
-main((7, 7))
+main((5, 5))
 
 
 

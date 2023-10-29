@@ -1,4 +1,4 @@
-class tree_node(object):
+class TreeNode(object):
     def __init__(self, key):
         self.key = key
         self.left = None
