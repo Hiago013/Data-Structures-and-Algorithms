@@ -6,7 +6,7 @@ def main(grid_size):
     # Create the grid world
     w, h = grid_size
     grid_world = create_grid_world(grid_size)
-    insert_obstacle(grid_world, (w // 2, h // 2))
+    insert_obstacle(grid_world, (w - 2, h // 2))
     
     print(grid_world)
 
@@ -30,7 +30,7 @@ def main(grid_size):
     viewer.draw_robot()
     viewer.draw_goal()
     viewer.draw_grid_world()
-    viewer.draw_obstacle([(w // 2, h // 2)])
+    viewer.draw_obstacle([(w // 2, h - 2)])
     viewer.draw_path(planner.PATHS['backtracking']['path'], color=[250, 150, 0])
     viewer.draw_path(planner.PATHS['greedy']['path'], color=[0, 150, 250])
     viewer.draw_path(planner.PATHS['dynamic_programming']['path'], color=[150, 0, 250])
