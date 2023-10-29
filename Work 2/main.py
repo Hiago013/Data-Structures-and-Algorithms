@@ -7,8 +7,11 @@ def main(grid_size):
     w, h = grid_size
     grid_world = create_grid_world(grid_size)
     insert_obstacle(grid_world, (w//2, h-1))
-    insert_obstacle(grid_world, (w //2, 0))
-   
+    insert_obstacle(grid_world, (w//2, h // 2))
+    insert_obstacle(grid_world, (w//2, 0))
+    
+    print(grid_world)
+
     planner = path_planning(grid_world)
 
     t1 = Process(target=planner.solve_greedy)
@@ -18,14 +21,14 @@ def main(grid_size):
     t2.start()
     t3.start()
 
-    #print(grid_world)
+    print(grid_world)
     #print('Greedy -- >', planner.solve_greedy(), '\n')
     #print('BackTracking -- >', planner.solve_backtracking(), '\n')
     #print('DynamicPrograming -- >', planner.solve_dynamic_programming())
 
 
 
-main((4, 4))
+main((5, 5))
 
 
 

@@ -53,7 +53,7 @@ class path_planning(object):
       for column in range(1, h):
          table[line, column] = np.max([table[line - 1, column],\
                                     table[line, column - 1]]) + self.__grid_world[line, column]
-    path = self.__helper_dynamic_programming(table)
+    path = self.__helper_dynamic_programming(table, w-1, h-1)
     print(path)
     print('table\n', table)
     return path
@@ -72,12 +72,16 @@ class path_planning(object):
               else:
                   y_current += 1
 
-          elif x_current < xg - 1:
+          elif x_current < xg - 1 and self.__grid_world[x_current + 1, y_current] != -np.inf:
               path.append(0)
               x_current += 1
-          elif y_current < yg - 1:
+          elif y_current < yg - 1 and self.__grid_world[x_current, y_current + 1] != -np.inf:
               path.append(1)
               y_current += 1
+          else:
+             print("Impossible to solve!")
+             print(path)
+             return path
       print(path)
       return path
 
@@ -113,25 +117,25 @@ class path_planning(object):
 
   def __helper_dynamic_programming(self, table, index_down = 0, index_right = 0, path = []):
       wg, hg = self.__xg, self.__yg
-      if (wg - 1, hg - 1) == (index_down, index_right):
+      if (0, 0) == (index_down, index_right):
          return path
       else:
-        if wg - 1 > index_down and hg - 1 > index_right:
-          action = np.argmax([table[index_down + 1, index_right],
-                              table[index_down, index_right + 1]])
-        elif wg - 1 > index_down:
+        if 0 < index_down and 0 < index_right:
+          action = np.argmax([table[index_down - 1, index_right],
+                              table[index_down, index_right - 1]])
+        elif 0 < index_down:
           action = 0
-        elif hg - 1 > index_right:
+        elif 0 < index_right:
           action = 1
             
         if action == 0:
-          path_ok = self.__helper_dynamic_programming(table,index_down = index_down + 1,
+          path_ok = self.__helper_dynamic_programming(table,index_down = index_down - 1,
                                                           index_right = index_right,
-                                                          path = path + [0])
+                                                          path = [0] + path )
         else:
           path_ok = self.__helper_dynamic_programming(table,index_down = index_down,
-                                                          index_right = index_right + 1,
-                                                          path = path + [1])
+                                                          index_right = index_right - 1,
+                                                          path = [1] + path )
       return path_ok
                 
 if __name__ == "__main__":
