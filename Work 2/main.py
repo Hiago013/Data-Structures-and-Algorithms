@@ -7,8 +7,8 @@ def main(grid_size):
     w, h = grid_size
     grid_world = create_grid_world(grid_size)
     insert_obstacle(grid_world, (w//2, h-1))
-    insert_obstacle(grid_world, (w//2, h // 2))
-    insert_obstacle(grid_world, (w//2, 0))
+    insert_obstacle(grid_world, (w - 1, h // 2))
+    #insert_obstacle(grid_world, (w//2, 0))
     
     print(grid_world)
 
@@ -28,7 +28,7 @@ def main(grid_size):
 
 
 
-main((5, 5))
+main((7, 7))
 
 
 

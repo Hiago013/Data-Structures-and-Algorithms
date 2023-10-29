@@ -60,18 +60,24 @@ def draw_path(dimension, image, path, color = [0, 150, 250]):
 def draw_obstacle(dimension, image):
     w, h = image.shape[0] , image.shape[1]
     w_step, h_step = w // dimension[0], h // dimension[1]
-    cv2.circle(image, (w - w_step // 2 , h // 2), w_step // 4, (0,0,0), -1)
-    cv2.circle(image, (w // 2 , h - h_step//2), w_step // 4, (0,0,0), -1)
+    if dimension[0] % 2 == 0:
+        cv2.circle(image, (w - w_step // 2 , h // 2 - h_step//2), w_step // 4, (0,0,0), -1)
+        cv2.circle(image, (w // 2 - w_step // 2, h - h_step//2), w_step // 4, (0,0,0), -1)
+    else:
+        cv2.circle(image, (w - w_step // 2 , h // 2), w_step // 4, (0,0,0), -1)
+        cv2.circle(image, (w // 2 , h - h_step//2), w_step // 4, (0,0,0), -1)
+
 
 # Create a white image using numpy to create and array of white
 image = 255 * np.ones((512,512,3), np.uint8)
 
-draw_robot((5,5), image)
-draw_goal((5,5), image)
-draw_grid_world((5, 5), image = image)
-draw_obstacle((5,5), image)
-draw_path((5,5), image, [0, 0, 1, 1, 0, 1, 0, 1])
-draw_path((5,5), image, [1, 1, 0, 0, 1, 0, 1, 0], [250, 150, 0])
-draw_path((5,5), image, [0, 0, 0, 0, 1], [250, 0, 150])
+size = (5,5)
+draw_robot(size, image)
+draw_goal(size, image)
+draw_grid_world(size, image = image)
+draw_obstacle(size, image)
+#draw_path(size, image, [0, 0, 1, 1, 0, 1, 0, 1])
+#draw_path(size, image, [1, 1, 0, 0, 1, 0, 1, 0], [250, 150, 0])
+#draw_path(size, image, [0, 0, 0, 0, 1], [250, 0, 150])
 
 imshow("Grid World", image)

@@ -94,7 +94,7 @@ class path_planning(object):
     decision_tree = tree_node('root')
     self.__helper_backtracking(decision_tree, path, self.__grid_world[0,0])
     visualize_binary_tree(decision_tree)
-    print(global_path.tolist())
+    print(global_path)
     return global_path
 
   def __helper_backtracking(self, tree : tree_node, path, S = 0, index_down = 0, index_right = 0, i = 0):
