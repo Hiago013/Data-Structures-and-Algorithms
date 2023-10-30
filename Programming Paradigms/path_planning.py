@@ -124,9 +124,6 @@ class PathPlanning(object):
     # Start the backtracking algorithm to find the optimal path
     self.__helper_backtracking(decision_tree, path, self.__grid_world[0, 0])
 
-    # Optionally visualize the decision tree
-    # visualize_binary_tree(decision_tree)
-
     # Update the backtracking path in the PATHS dictionary
     self.PATHS['backtracking']['path'] = global_path
 
