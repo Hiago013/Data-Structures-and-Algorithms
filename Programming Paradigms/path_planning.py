@@ -41,9 +41,9 @@ def insert_obstacle(grid_world, obstacle_position):
             grid_world[row, col] -= 1  # Decrease values in the neighboring cells
 
 class PathPlanning(object):
-  PATHS =           {'greedy': {'path': [], 'basic_operation': 0},
-               'backtracking': {'path': [], 'basic_operation': 0},
-        'dynamic_programming': {'path': [], 'basic_operation': 0}}
+  PATHS =           {'greedy': {'path': [], 'basic_operation': 0, 'reward' : 0},
+               'backtracking': {'path': [], 'basic_operation': 0, 'reward' : 0},
+        'dynamic_programming': {'path': [], 'basic_operation': 0, 'reward' : 0}}
   def __init__(self, grid_world):
     self.__grid_world = grid_world
     self.__xg, self.__yg = self.__grid_world.shape
@@ -64,6 +64,7 @@ class PathPlanning(object):
         for column in range(1, height):
             table[line, column] = np.max([table[line - 1, column], table[line, column - 1]]) + self.__grid_world[line, column]
             self.PATHS['dynamic_programming']['basic_operation'] += 1
+            
 
     # Find the optimal path using the helper function
     path = self.__helper_dynamic_programming(table, width - 1, height - 1)
