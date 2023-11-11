@@ -1,6 +1,8 @@
 def partition_to_subset_sum(partition_set):
     # Calculate the total sum of numbers in the set
-    total_sum = sum(partition_set)
+    total_sum = 0
+    for value in partition_set:
+        total_sum += value
 
     # Check if the total sum is odd (which makes partitioning impossible)
     if total_sum % 2 != 0:
