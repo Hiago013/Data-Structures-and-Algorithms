@@ -6,7 +6,9 @@ def partition_to_subset_sum(partition_set):
 
     # Check if the total sum is odd (which makes partitioning impossible)
     if total_sum % 2 != 0:
-        raise ValueError("Cannot perform mapping. Total sum is odd.")
+        subset_sum_set = []
+        target_sum_subset_sum = 10
+        return subset_sum_set, target_sum_subset_sum
 
     # Target sum for the Subset Sum problem is half of the total sum
     target_sum_subset_sum = total_sum // 2
@@ -39,11 +41,15 @@ def subset_sum_recursive(i, curr_sum, memo):
         memo[(i, curr_sum)] = result  # Cache the result
         return result
 
-# Example usage:
-partition_set_example = [3, 5, 7, 8, 9]
-subset_sum_set, target_sum_subset_sum = partition_to_subset_sum(partition_set_example)
+# Example:
+S1 = [2, 5, 7, 8, 9] # odd sum
+S2 = [7, 5, 7, 8, 9] # even sum
+S3 = [3, 5, 7, 8, 9] # even sum
+sets = [S1, S2, S3]
 
-print("Partition Set:", partition_set_example)
-print("Subset Sum Set:", subset_sum_set)
-print("Target Sum for Subset Sum:", target_sum_subset_sum)
-print(is_subset_sum(subset_sum_set, target_sum_subset_sum))
+for S in sets:
+    subset_sum_set, target_sum_subset_sum = partition_to_subset_sum(S)
+    print("Partition Set:", S)
+    print("Subset Sum Set:", subset_sum_set)
+    print("Target Sum for Subset Sum:", target_sum_subset_sum)
+    print(is_subset_sum(subset_sum_set, target_sum_subset_sum), '\n')
