@@ -1,0 +1,14 @@
+Força bruta é um paradigma para resolução de problemas que atua diretamente nas definições do problema. 
+
+Alguns exemplos de algoritmos de força bruta: Sequence Search, Matrix Multiplication (Naive)
+
+Pontos fortes: simples, vasta aplicabilidade, útil para resolver problemas para instâncias pequenas.
+Pontos fracos: Geralmente leva para algoritmos ineficientes, alguns algortimos são lentissimos (anos executando)
+
+
+ -----------------------------------------------------------
+ -    Divisao conquista (Subsequencia maxima)              -
+ -    Algoritmo de Prim(Guloso) Arvore geradora minima     - 
+ -    Coin raw (Programação dinamica)                      -
+ -    ABCD (Ser classe P? ser NP ? ser NPC e ser NP-HARD)  -
+ -----------------------------------------------------------
