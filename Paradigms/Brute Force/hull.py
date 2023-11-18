@@ -1,6 +1,8 @@
 def convexHull(points):
     n = len(points)
-    hull = set()
+    if n < 3:
+        return -1
+    hull = []
     for i in range(n):
         for j in range(i, n):
             x1 = points[i][0]
